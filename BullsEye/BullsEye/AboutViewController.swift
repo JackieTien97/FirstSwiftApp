@@ -9,11 +9,20 @@
 import UIKit
 
 class AboutViewController: UIViewController {
+    
+    @IBOutlet weak var webView: UIWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if let htmlFile = Bundle.init().path(forResource: "BullsEye", ofType: "html") {
+            let htmlFileURL = URL.init(fileURLWithPath: htmlFile)
+            let htmlData = try! Data(contentsOf: htmlFileURL)
+            let baseURL = NSURL.fileURL(withPath: Bundle.init().bundlePath)
+            webView.load(htmlData, mimeType: "text/html", textEncodingName: "UTF-8", baseURL: baseURL)
+        }
+//        let url = URL.init(fileURLWithPath: "http://www.baidu.com")
+//        let request = URLRequest(url: url)
+//        webView.loadRequest(request)
     }
 
     override func didReceiveMemoryWarning() {
